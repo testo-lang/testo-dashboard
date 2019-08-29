@@ -15,7 +15,7 @@ import {
 
 import { MoreHorizontal } from "react-feather";
 
-const BarChart = ({ theme }) => {
+const BarChart = () => {
   const data = {
     labels: [
       "15 Авг",
@@ -34,10 +34,10 @@ const BarChart = ({ theme }) => {
     datasets: [
       {
         label: "Last year",
-        backgroundColor: theme.primary,
-        borderColor: theme.primary,
-        hoverBackgroundColor: theme.primary,
-        hoverBorderColor: theme.primary,
+        backgroundColor: "#47bac1",
+        borderColor: "#47bac1",
+        hoverBackgroundColor: "#47bac1",
+        hoverBorderColor: "#47bac1",
         data: [15, 18, 18, 18, 22, 23, 22, 25, 25, 25, 30, 30]
       }
     ]
@@ -103,6 +103,4 @@ const BarChart = ({ theme }) => {
   );
 };
 
-export default connect(store => ({
-  theme: store.theme.currentTheme
-}))(BarChart);
+export default BarChart;

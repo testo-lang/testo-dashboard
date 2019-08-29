@@ -18,15 +18,15 @@ import { MoreHorizontal } from "react-feather";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare } from "@fortawesome/free-solid-svg-icons";
 
-const PieChart = ({ theme }) => {
+const PieChart = () => {
   const data = {
     labels: ["Успешные тесты", "Проваленные тесты"],
     datasets: [
       {
         data: [24, 5],
         backgroundColor: [
-          theme.tertiary,
-          theme.danger,
+          "#5fc27e",
+          "#f44455",
         ],
         borderColor: "transparent"
       }
@@ -108,6 +108,4 @@ const PieChart = ({ theme }) => {
   );
 };
 
-export default connect(store => ({
-  theme: store.theme.currentTheme
-}))(PieChart);
+export default PieChart;
