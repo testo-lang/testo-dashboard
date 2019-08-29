@@ -2,11 +2,15 @@ import React from "react";
 import { Provider } from "react-redux";
 
 import store from "./redux/store/index";
-import Routes from "./routes/Routes";
+
+import DashboardLayout from "./layouts/Dashboard";
+import Default from "./pages/dashboards/Default";
 
 const App = () => (
   <Provider store={store}>
-    <Routes />
+    <DashboardLayout>
+      <Default/>
+    </DashboardLayout>
   </Provider>
 );
 
