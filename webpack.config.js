@@ -1,0 +1,31 @@
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'public/dist'),
+    publicPath: 'file:///Users/log0div0/work/testo-dashboard/public/dist/'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.s[ac]ss$/,
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
+      },
+    ]
+}
+};

@@ -41,6 +41,10 @@ const childRoutes = (Layout, routes) =>
     )
   );
 
+import async from "../components/Async";
+
+const Default = async(() => import("../pages/dashboards/Default"));
+
 const Routes = () => (
   <Router>
     <ScrollToTop>
@@ -48,9 +52,9 @@ const Routes = () => (
         {childRoutes(DashboardLayout, dashboardRoutes)}
         <Route
           render={() => (
-            <AuthLayout>
-              <Page404 />
-            </AuthLayout>
+            <DashboardLayout>
+              <Default/>
+            </DashboardLayout>
           )}
         />
       </Switch>
