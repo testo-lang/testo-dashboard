@@ -23,24 +23,6 @@ export default function reducer(state = initialState, actions) {
         isOpen: false
       };
 
-    case types.SIDEBAR_STICKY_TOGGLE:
-      return {
-        ...state,
-        isSticky: !state.isSticky
-      };
-    case types.SIDEBAR_STICKY_ENABLE:
-      return {
-        ...state,
-        isSticky: true
-      };
-    case types.LAYOUT_BOXED_ENABLE:
-    case types.LAYOUT_BOXED_TOGGLE:
-    case types.SIDEBAR_STICKY_DISABLE:
-      return {
-        ...state,
-        isSticky: false
-      };
-
     default:
       return state;
   }
