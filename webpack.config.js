@@ -6,7 +6,7 @@ module.exports = {
 	output: {
 		filename: 'main.js',
 		path: path.resolve(__dirname, 'public/dist'),
-		publicPath: 'file:///Users/log0div0/work/testo-dashboard/public/dist/'
+		publicPath: 'dist/'
 	},
 	module: {
 		rules: [
