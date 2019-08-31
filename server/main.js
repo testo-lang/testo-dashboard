@@ -61,7 +61,7 @@ const testo = {
 			{
 				name: 'install_jinn',
 				description: 'JinnServer должен корректно устанавливаться из rpm пакетов на узел CAS1',
-				duration: 15,
+				duration: 1001,
 				status: 'success'
 			},
 			{
@@ -73,7 +73,7 @@ const testo = {
 			{
 				name: 'update_jinn',
 				description: 'JinnServer должен корректно обновлятся с предыдущей релизной версии',
-				duration: 15,
+				duration: 4018,
 				status: 'success'
 			}
 		]

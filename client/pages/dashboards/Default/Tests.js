@@ -58,11 +58,24 @@ const Tests = () => (
 						if (test.description === '') {
 							return null;
 						}
+						const hours = Math.floor(test.duration / 3600);
+						const minutes = Math.floor((test.duration % 3600) / 60);
+						const seconds = (test.duration % 3600) % 60;
+						let duration = '';
+						if (hours > 0) {
+							duration += `${hours} час `;
+						}
+						if ((hours > 0) || (minutes > 0)) {
+							duration += `${minutes} мин `;
+						}
+						if (hours == 0) {
+							duration += `${seconds} сек`;
+						}
 						return (
 							<tr key={test.name}>
 								<td>{test.name}</td>
 								<td className="d-none d-md-table-cell">{test.description}</td>
-								<td className="d-none d-xl-table-cell">1 минута</td>
+								<td className="d-none d-xl-table-cell">{duration}</td>
 								<td>
 									<Badge color={status_to_class(test.status)}>{status_to_text(test.status)}</Badge>
 								</td>
