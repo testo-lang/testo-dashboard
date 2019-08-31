@@ -3,14 +3,11 @@ import { Provider } from "react-redux";
 
 import store from "./store";
 
-import DashboardLayout from "./layouts/Dashboard";
-import Default from "./pages/dashboards/Default";
+import Dashboard from "./pages/dashboard";
 
 const App = () => (
 	<Provider store={store}>
-		<DashboardLayout>
-			<Default/>
-		</DashboardLayout>
+		<Dashboard/>
 	</Provider>
 );
 
