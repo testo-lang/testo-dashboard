@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 
-import store from "./redux/store/index";
+import store from "./store";
 
 import DashboardLayout from "./layouts/Dashboard";
 import Default from "./pages/dashboards/Default";

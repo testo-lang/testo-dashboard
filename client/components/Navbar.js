@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { toggleSidebar } from "../redux/actions/sidebarActions";
 
 import {
 	Row,
@@ -26,12 +25,11 @@ const NavbarComponent = ({ dispatch }) => {
 		<Navbar color="white" light expand>
 			<span
 				className="sidebar-toggle d-flex mr-2"
-				onClick={() => {
-					dispatch(toggleSidebar());
-				}}
+				onClick={() => dispatch({type: 'TOGGLE_SIDEBAR'})}
 			>
 				<i className="hamburger align-self-center" />
 			</span>
+			<h4 className="mb-0 ml-1">{testo.currentProject} - {testo.currentBranch}</h4>
 		</Navbar>
 	);
 };

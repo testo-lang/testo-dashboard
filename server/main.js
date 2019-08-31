@@ -7,6 +7,35 @@ const app = express();
 const port = 3000;
 
 const testo = {
+	projects: [
+		{
+			name: 'JinnServer',
+			branches: [
+				{
+					name: 'develop'
+				},
+				{
+					name: 'release'
+				},
+				{
+					name: 'feature-autotests'
+				}
+			]
+		},
+		{
+			name: 'TLSServer',
+			branches: [
+				{
+					name: 'devel'
+				},
+				{
+					name: 'release'
+				}
+			]
+		}
+	],
+	currentProject: 'JinnServer',
+	currentBranch: 'develop',
 	lastReportsStats: [
 	],
 	lastReport: {
