@@ -1,5 +1,5 @@
 
-import './assets/scss/_app.scss'
+import './styles/_app.scss'
 
 import React from "react";
 import ReactDOM from "react-dom";
