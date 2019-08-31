@@ -3,9 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 
 import LineChart from "./LineChart";
 import PieChart from "./PieChart";
-import Appointments from "./Appointments";
-import Projects from "./Projects";
-import BarChart from "./BarChart";
+import Tests from "./Tests";
 
 const Default = () => (
 	<Container fluid className="p-0">
@@ -18,16 +16,8 @@ const Default = () => (
 			</Col>
 		</Row>
 		<Row>
-			<Col lg="6" xl="8" className="d-flex">
-				<BarChart />
-			</Col>
-			<Col lg="6" xl="4" className="d-flex">
-				<Appointments />
-			</Col>
-		</Row>
-		<Row>
 			<Col lg="12" className="d-flex">
-				<Projects />
+				<Tests />
 			</Col>
 		</Row>
 	</Container>

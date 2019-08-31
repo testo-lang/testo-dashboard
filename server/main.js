@@ -10,7 +10,44 @@ const testo = {
 	lastReportsStats: [
 	],
 	lastReport: {
-
+		tests: [
+			{
+				name: 'configure_jinn',
+				description: 'jinn должен настраиваться',
+				duration: 15,
+				status: 'fail'
+			},
+			{
+				name: 'install_centos',
+				description: '',
+				duration: 15,
+				status: 'success'
+			},
+			{
+				name: 'install_additions_and_disable_selinux',
+				description: '',
+				duration: 15,
+				status: 'success'
+			},
+			{
+				name: 'install_jinn',
+				description: 'JinnServer должен корректно устанавливаться из rpm пакетов на узел CAS1',
+				duration: 15,
+				status: 'success'
+			},
+			{
+				name: 'remove_jinn',
+				description: 'JinnServer должен корректно удалятся из системы с помощью стандартных инструментов ОС CentOS. При этом в системе не должно оставаться лишних файлов.',
+				duration: 15,
+				status: 'success'
+			},
+			{
+				name: 'update_jinn',
+				description: 'JinnServer должен корректно обновлятся с предыдущей релизной версии',
+				duration: 15,
+				status: 'success'
+			}
+		]
 	}
 };
 

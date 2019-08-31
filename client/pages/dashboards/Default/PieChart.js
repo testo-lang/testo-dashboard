@@ -27,8 +27,7 @@ const PieChart = () => {
 				backgroundColor: [
 					"#5fc27e",
 					"#f44455",
-				],
-				borderColor: "transparent"
+				]
 			}
 		]
 	};
@@ -43,18 +42,6 @@ const PieChart = () => {
 	return (
 		<Card className="flex-fill w-100">
 			<CardHeader>
-				<div className="card-actions float-right">
-					<UncontrolledDropdown>
-						<DropdownToggle tag="a">
-							<MoreHorizontal />
-						</DropdownToggle>
-						<DropdownMenu right>
-							<DropdownItem>Action</DropdownItem>
-							<DropdownItem>Another Action</DropdownItem>
-							<DropdownItem>Something else here</DropdownItem>
-						</DropdownMenu>
-					</UncontrolledDropdown>
-				</div>
 				<CardTitle tag="h5" className="mb-0">
 					Последний запуск тестов
 				</CardTitle>
