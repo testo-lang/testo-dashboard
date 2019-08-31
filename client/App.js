@@ -7,11 +7,11 @@ import DashboardLayout from "./layouts/Dashboard";
 import Default from "./pages/dashboards/Default";
 
 const App = () => (
-  <Provider store={store}>
-    <DashboardLayout>
-      <Default/>
-    </DashboardLayout>
-  </Provider>
+	<Provider store={store}>
+		<DashboardLayout>
+			<Default/>
+		</DashboardLayout>
+	</Provider>
 );
 
 export default App;

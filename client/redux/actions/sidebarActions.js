@@ -1,19 +1,19 @@
 import * as types from "../constants";
 
 export function toggleSidebar() {
-  return {
-    type: types.SIDEBAR_VISIBILITY_TOGGLE
-  };
+	return {
+		type: types.SIDEBAR_VISIBILITY_TOGGLE
+	};
 }
 
 export function showSidebar() {
-  return {
-    type: types.SIDEBAR_VISIBILITY_SHOW
-  };
+	return {
+		type: types.SIDEBAR_VISIBILITY_SHOW
+	};
 }
 
 export function hideSidebar() {
-  return {
-    type: types.SIDEBAR_VISIBILITY_HIDE
-  };
+	return {
+		type: types.SIDEBAR_VISIBILITY_HIDE
+	};
 }

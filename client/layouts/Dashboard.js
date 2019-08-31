@@ -8,15 +8,15 @@ import Content from "../components/Content";
 import Footer from "../components/Footer";
 
 const Dashboard = ({ children }) => (
-  <React.Fragment>
-    <Wrapper>
-      <Sidebar />
-      <Main>
-        <Navbar />
-        <Content>{children}</Content>
-      </Main>
-    </Wrapper>
-  </React.Fragment>
+	<React.Fragment>
+		<Wrapper>
+			<Sidebar />
+			<Main>
+				<Navbar />
+				<Content>{children}</Content>
+			</Main>
+		</Wrapper>
+	</React.Fragment>
 );
 
 export default Dashboard;
