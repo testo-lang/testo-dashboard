@@ -17,7 +17,9 @@ const PieChart = () => {
 	let successfulCount = 0;
 	let failedCount = 0;
 
-	for (let test of testo.lastReport.tests) {
+	let lastReport = testo.reports[testo.reports.length - 1];
+
+	for (let test of lastReport.tests) {
 		if (test.description != '') {
 			if (test.status == 'success') {
 				successfulCount += 1;
@@ -31,7 +33,7 @@ const PieChart = () => {
 	const totalCount = successfulCount + failedCount;
 
 	const data = {
-		labels: ["Успешные тесты", "Проваленные тесты"],
+		labels: ["Успешных тестов", "Проваленных тестов"],
 		datasets: [
 			{
 				data: [successfulCount, failedCount],

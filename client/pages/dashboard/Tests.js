@@ -54,7 +54,7 @@ const Tests = () => (
 			</thead>
 			<tbody>
 				{
-					testo.lastReport.tests.map((test) => {
+					testo.reports[testo.reports.length - 1].tests.map((test) => {
 						if (test.description === '') {
 							return null;
 						}

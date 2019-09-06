@@ -1,66 +1,48 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import { connect } from "react-redux";
+import { Card, CardBody, CardHeader, CardTitle } from "reactstrap";
+import moment from "moment"
 
-import { Badge, Card, CardBody, CardHeader, CardTitle } from "reactstrap";
+moment.locale('ru');
+
+function totalTests(report) {
+	return report.tests.reduce(function(n, test) {
+		if (test.description != "") {
+			return n + 1;
+		}
+		return n;
+	}, 0)
+}
+
+function successfullTests(report) {
+	return report.tests.reduce(function(n, test) {
+		if (test.description != "") {
+			if (test.status == "success") {
+				return n + 1;
+			}
+		}
+		return n;
+	}, 0)
+}
 
 const LineChart = () => {
 	const data = {
-		labels: [
-			"15 Авг",
-			"16 Авг",
-			"17 Авг",
-			"18 Авг",
-			"19 Авг",
-			"20 Авг",
-			"21 Авг",
-			"22 Авг",
-			"23 Авг",
-			"24 Авг",
-			"25 Авг",
-			"26 Авг"
-		],
+		labels: testo.reports.map(report => moment(report.date).format("D MMM")),
 		datasets: [
 			{
-				label: "Sales ($)",
+				label: "Всего тестов",
 				fill: true,
 				backgroundColor: "transparent",
 				borderColor: "#47bac1",
-				data: [
-					18,
-					18,
-					19,
-					19,
-					19,
-					22,
-					26,
-					26,
-					26,
-					28,
-					29,
-					29
-				]
+				data: testo.reports.map(totalTests)
 			},
 			{
-				label: "Orders",
+				label: "Успешных тестов",
 				fill: true,
 				backgroundColor: "transparent",
 				borderColor: "#5fc27e",
 				borderDash: [4, 4],
-				data: [
-					8,
-					12,
-					18,
-					19,
-					19,
-					19,
-					21,
-					22,
-					25,
-					23,
-					25,
-					26
-				]
+				data: testo.reports.map(successfullTests)
 			}
 		]
 	};
