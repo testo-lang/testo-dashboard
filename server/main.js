@@ -6,7 +6,7 @@ import { MongoClient } from 'mongodb';
 import assert from 'assert';
 
 const app = express();
-const port = 3000;
+const port = 80;
 
 let db = null;
 
