@@ -2,9 +2,13 @@
 import express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import { MongoClient } from 'mongodb';
+import assert from 'assert';
 
 const app = express();
 const port = 3000;
+
+let db = null;
 
 const testo = {
 	projects: [
@@ -206,5 +210,9 @@ app.get('/', (req, res) => {
 });
 app.use(express.static('public'));
 
+MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true }, function(err, client) {
+	assert.equal(null, err);
+	db = client.db('testo');
+	app.listen(port, () => console.log(`Listening on port ${port}`));
+});
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
