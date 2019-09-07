@@ -71,6 +71,9 @@ const Tests = () => (
 						if (hours == 0) {
 							duration += `${seconds} сек`;
 						}
+						if (test.is_cached == true) {
+							duration += ' (кэширован)';
+						}
 						return (
 							<tr key={test.name}>
 								<td>{test.name}</td>
