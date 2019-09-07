@@ -96,7 +96,7 @@ class Sidebar extends React.Component {
 												<SidebarItem
 													key={branch.name}
 													name={branch.name}
-													to={`\${project.name}\${branch.name}`}
+													to={`\\project\\${project.name}\\branch\\${branch.name}`}
 													isActive={(project.name == testo.currentProject) && (branch.name == testo.currentBranch)}
 												/>
 											)

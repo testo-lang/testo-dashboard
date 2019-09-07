@@ -10,204 +10,45 @@ const port = 3000;
 
 let db = null;
 
-const testo = {
-	projects: [
-		{
-			name: 'JinnServer',
-			branches: [
-				{
-					name: 'develop'
-				},
-				{
-					name: 'release'
-				},
-				{
-					name: 'feature-autotests'
-				}
-			]
-		},
-		{
-			name: 'TLSServer',
-			branches: [
-				{
-					name: 'devel'
-				},
-				{
-					name: 'release'
-				}
-			]
-		}
-	],
-	currentProject: 'JinnServer',
-	currentBranch: 'develop',
-	reports: [
-		{
-			date: "2019-04-18T14:47:43.918Z",
-			tests: [
-				{
-					name: 'configure_jinn',
-					description: 'jinn должен настраиваться',
-					duration: 15,
-					status: 'fail'
-				},
-				{
-					name: 'install_centos',
-					description: '',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'install_additions_and_disable_selinux',
-					description: '',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'update_jinn',
-					description: 'JinnServer должен корректно обновлятся с предыдущей релизной версии',
-					duration: 4018,
-					status: 'success'
-				}
-			]
-		},
-		{
-			date: "2019-04-18T14:47:43.918Z",
-			tests: [
-				{
-					name: 'configure_jinn',
-					description: 'jinn должен настраиваться',
-					duration: 15,
-					status: 'fail'
-				},
-				{
-					name: 'install_centos',
-					description: '',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'install_additions_and_disable_selinux',
-					description: '',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'remove_jinn',
-					description: 'JinnServer должен корректно удалятся из системы с помощью стандартных инструментов ОС CentOS. При этом в системе не должно оставаться лишних файлов.',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'update_jinn',
-					description: 'JinnServer должен корректно обновлятся с предыдущей релизной версии',
-					duration: 4018,
-					status: 'success'
-				}
-			]
-		},
-		{
-			date: "2019-08-01T14:47:43.918Z",
-			tests: [
-				{
-					name: 'configure_jinn',
-					description: 'jinn должен настраиваться',
-					duration: 15,
-					status: 'fail'
-				},
-				{
-					name: 'install_centos',
-					description: '',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'install_additions_and_disable_selinux',
-					description: '',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'install_jinn',
-					description: 'JinnServer должен корректно устанавливаться из rpm пакетов на узел CAS1',
-					duration: 1001,
-					status: 'fail'
-				},
-				{
-					name: 'remove_jinn',
-					description: 'JinnServer должен корректно удалятся из системы с помощью стандартных инструментов ОС CentOS. При этом в системе не должно оставаться лишних файлов.',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'update_jinn',
-					description: 'JinnServer должен корректно обновлятся с предыдущей релизной версии',
-					duration: 4018,
-					status: 'success'
-				}
-			]
-		},
-		{
-			date: "2019-09-06T14:47:43.918Z",
-			tests: [
-				{
-					name: 'configure_jinn',
-					description: 'jinn должен настраиваться',
-					duration: 15,
-					status: 'fail'
-				},
-				{
-					name: 'install_centos',
-					description: '',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'install_additions_and_disable_selinux',
-					description: '',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'install_jinn',
-					description: 'JinnServer должен корректно устанавливаться из rpm пакетов на узел CAS1',
-					duration: 1001,
-					status: 'success'
-				},
-				{
-					name: 'remove_jinn',
-					description: 'JinnServer должен корректно удалятся из системы с помощью стандартных инструментов ОС CentOS. При этом в системе не должно оставаться лишних файлов.',
-					duration: 15,
-					status: 'success'
-				},
-				{
-					name: 'update_jinn',
-					description: 'JinnServer должен корректно обновлятся с предыдущей релизной версии',
-					duration: 4018,
-					status: 'success'
-				}
-			]
-		}
-	]
-};
+app.get('/', async function(req, res) {
+	const project = await db.collection('projects').findOne();
+	res.redirect(`/project/${project.name}/branch/${project.branches[0].name}`);
+});
 
-const page =
-	<html lang="ru">
-		<head>
-			<meta charSet="utf-8"/>
-			<title>Testo Dashboard</title>
-			<link rel="preconnect" href="//fonts.gstatic.com/" crossOrigin=""/>
-		</head>
-			<body>
-				<div id="root"></div>
-			</body>
-		<script dangerouslySetInnerHTML={{__html: `window.testo = ${JSON.stringify(testo)};`}}></script>
-		<script src="dist/main.js"></script>
-	</html>
-;
-
-app.get('/', (req, res) => {
+app.get('/project/:project/branch/:branch', async function(req, res) {
+	const {project, branch} = req.params;
+	const projectCursor = db.collection('projects').find().toArray();
+	const reportsCursor = db.collection('reports').find({project, branch})
+		.project({project: 0, branch: 0})
+		.sort({start_timestamp: -1})
+		.limit(10)
+		.sort({start_timestamp: 1})
+		.toArray();
+	const projects = await projectCursor;
+	const reports = await reportsCursor;
+	const testo = {
+		projects,
+		reports,
+		currentProject: project,
+		currentBranch: branch
+	};
+	const page =
+		<html lang="ru">
+			<head>
+				<meta charSet="utf-8"/>
+				<title>Testo Dashboard</title>
+				<link rel="preconnect" href="//fonts.gstatic.com/" crossOrigin=""/>
+			</head>
+				<body>
+					<div id="root"></div>
+				</body>
+			<script dangerouslySetInnerHTML={{__html: `window.testo = ${JSON.stringify(testo)};`}}></script>
+			<script src="/dist/main.js"></script>
+		</html>
+	;
 	res.send('<!DOCTYPE html>' + ReactDOMServer.renderToStaticMarkup(page));
 });
+
 app.use(express.static('public'));
 
 MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true }, function(err, client) {
