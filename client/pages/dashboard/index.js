@@ -50,6 +50,7 @@ const Default = () => (
 			<Navbar />
 			<Content>
 				<Container fluid className="p-0">
+					<h4 className="mb-3">Сборка #{testo.lastReport.build_number}</h4>
 					<Row>
 						<Col md="6" xl>
 							<Statistics icon={Layers} title={testo.lastReport.totalTestsCount} description="Общее количество тестов для этой сборки"/>

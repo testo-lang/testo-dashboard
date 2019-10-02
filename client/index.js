@@ -9,6 +9,10 @@ import store from "./store";
 import { Provider } from "react-redux";
 import Dashboard from "./pages/dashboard";
 
+for (let report of testo.buildNumbers) {
+	report.stop_timestamp = new Date(report.stop_timestamp);
+}
+
 for (let report of testo.reports) {
 	let successfulTestsCount = 0;
 	let failedTestsCount = 0;

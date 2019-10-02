@@ -1,13 +1,11 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 import { Card, CardBody, CardHeader, CardTitle } from "reactstrap";
-import moment from "moment"
-
-moment.locale('ru');
+import { StringifyTimestamp } from "../../utils";
 
 const LineChart = () => {
 	const data = {
-		labels: testo.reports.map(report => moment(report.date).format("D MMM")),
+		labels: testo.reports.map(report => StringifyTimestamp(report.stop_timestamp)),
 		datasets: [
 			{
 				label: "Всего тестов",

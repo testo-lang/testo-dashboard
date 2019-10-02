@@ -15,19 +15,33 @@ app.get('/', async function(req, res) {
 	res.redirect(`/project/${project.name}/branch/${project.branches[0].name}`);
 });
 
-app.get('/project/:project/branch/:branch', async function(req, res) {
+const reportPage = async function(req, res) {
 	const {project, branch} = req.params;
-	const projectCursor = db.collection('projects').find().toArray();
-	const reportsCursor = db.collection('reports').find({project, branch})
-		.project({project: 0, branch: 0})
-		.sort({start_timestamp: -1})
+	const projectCursor = db.collection('projects').find({})
+		.project({_id: 0})
+		.toArray();
+	const buildNumbersCursor = db.collection('reports').find({project, branch})
+		.project({_id: 0, build_number: 1, stop_timestamp: 1})
+		.sort({build_number: -1})
+		.toArray();
+	const filter = {project, branch};
+	if ('build' in req.params) {
+		filter.build_number = {
+			$lte: parseInt(req.params.build)
+		};
+	}
+	const reportsCursor = db.collection('reports').find(filter)
+		.project({_id: 0, project: 0, branch: 0})
+		.sort({build_number: -1})
 		.limit(10)
-		.sort({start_timestamp: 1})
+		.sort({build_number: 1})
 		.toArray();
 	const projects = await projectCursor;
+	const buildNumbers = await buildNumbersCursor;
 	const reports = await reportsCursor;
 	const testo = {
 		projects,
+		buildNumbers,
 		reports,
 		currentProject: project,
 		currentBranch: branch
@@ -47,7 +61,10 @@ app.get('/project/:project/branch/:branch', async function(req, res) {
 		</html>
 	;
 	res.send('<!DOCTYPE html>' + ReactDOMServer.renderToStaticMarkup(page));
-});
+};
+
+app.get('/project/:project/branch/:branch', reportPage);
+app.get('/project/:project/branch/:branch/build/:build', reportPage);
 
 app.use(express.static('public'));
 
