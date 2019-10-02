@@ -22,7 +22,8 @@
 		"react-perfect-scrollbar": "^1.5.3",
 		"react-redux": "^7.1.1",
 		"reactstrap": "^8.0.1",
-		"redux": "^4.0.4"
+		"redux": "^4.0.4",
+		"yargs": "^14.0.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.5.5",
