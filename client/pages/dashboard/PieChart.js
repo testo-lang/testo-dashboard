@@ -14,29 +14,13 @@ import { faSquare } from "@fortawesome/free-solid-svg-icons";
 
 const PieChart = () => {
 
-	let successfulCount = 0;
-	let failedCount = 0;
-
-	let lastReport = testo.reports[testo.reports.length - 1];
-
-	for (let test of lastReport.tests) {
-		if (test.description != '') {
-			if (test.status == 'success') {
-				successfulCount += 1;
-			}
-			if (test.status == 'fail') {
-				failedCount += 1;
-			}
-		}
-	}
-
-	const totalCount = successfulCount + failedCount;
+	const {totalTestsCount, successfulTestsCount, failedTestsCount} = testo.lastReport;
 
 	const data = {
 		labels: ["Успешных тестов", "Проваленных тестов"],
 		datasets: [
 			{
-				data: [successfulCount, failedCount],
+				data: [successfulTestsCount, failedTestsCount],
 				backgroundColor: [
 					"#5fc27e",
 					"#f44455",
@@ -56,7 +40,7 @@ const PieChart = () => {
 		<Card className="flex-fill w-100">
 			<CardHeader>
 				<CardTitle tag="h5" className="mb-0">
-					Последний запуск тестов
+					Результат тестирования этой сборки
 				</CardTitle>
 			</CardHeader>
 			<CardBody className="d-flex">
@@ -78,27 +62,19 @@ const PieChart = () => {
 						<tbody>
 							<tr>
 								<td>
-									<FontAwesomeIcon icon={faSquare} className="text-primary" />{" "}
-									Всего тестов
-								</td>
-								<td className="text-right">{totalCount}</td>
-								<td className="text-right">100%</td>
-							</tr>
-							<tr>
-								<td>
 									<FontAwesomeIcon icon={faSquare} className="text-success" />{" "}
 									Успешные тесты
 								</td>
-								<td className="text-right">{successfulCount}</td>
-								<td className="text-right">{Math.floor((successfulCount / totalCount) * 100)}%</td>
+								<td className="text-right">{successfulTestsCount}</td>
+								<td className="text-right">{Math.floor((successfulTestsCount / totalTestsCount) * 100)}%</td>
 							</tr>
 							<tr>
 								<td>
 									<FontAwesomeIcon icon={faSquare} className="text-danger" />{" "}
 									Проваленные тесты
 								</td>
-								<td className="text-right">{failedCount}</td>
-								<td className="text-right">{Math.floor((failedCount / totalCount) * 100)}%</td>
+								<td className="text-right">{failedTestsCount}</td>
+								<td className="text-right">{Math.floor((failedTestsCount / totalTestsCount) * 100)}%</td>
 							</tr>
 						</tbody>
 					</Table>

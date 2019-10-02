@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 
 import { MoreHorizontal } from "react-feather";
+import { StringifyDuration } from "../../utils";
 
 function status_to_text(status) {
 	switch (status) {
@@ -40,7 +41,7 @@ const Tests = () => (
 	<Card className="flex-fill w-100">
 		<CardHeader>
 			<CardTitle tag="h5" className="mb-0">
-				Список тестов из последнего запуска
+				Список тестов для этой сборки
 			</CardTitle>
 		</CardHeader>
 		<Table striped className="my-0">
@@ -54,23 +55,11 @@ const Tests = () => (
 			</thead>
 			<tbody>
 				{
-					testo.reports[testo.reports.length - 1].tests.map((test) => {
+					testo.lastReport.tests.map((test) => {
 						if (test.description === '') {
 							return null;
 						}
-						const hours = Math.floor(test.duration / 3600);
-						const minutes = Math.floor((test.duration % 3600) / 60);
-						const seconds = (test.duration % 3600) % 60;
-						let duration = '';
-						if (hours > 0) {
-							duration += `${hours} час `;
-						}
-						if ((hours > 0) || (minutes > 0)) {
-							duration += `${minutes} мин `;
-						}
-						if (hours == 0) {
-							duration += `${seconds} сек`;
-						}
+						let duration = StringifyDuration(test.duration)
 						if (test.is_cached == true) {
 							duration += ' (кэширован)';
 						}

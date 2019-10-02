@@ -5,26 +5,6 @@ import moment from "moment"
 
 moment.locale('ru');
 
-function totalTests(report) {
-	return report.tests.reduce(function(n, test) {
-		if (test.description != "") {
-			return n + 1;
-		}
-		return n;
-	}, 0)
-}
-
-function successfullTests(report) {
-	return report.tests.reduce(function(n, test) {
-		if (test.description != "") {
-			if (test.status == "success") {
-				return n + 1;
-			}
-		}
-		return n;
-	}, 0)
-}
-
 const LineChart = () => {
 	const data = {
 		labels: testo.reports.map(report => moment(report.date).format("D MMM")),
@@ -34,7 +14,7 @@ const LineChart = () => {
 				fill: true,
 				backgroundColor: "transparent",
 				borderColor: "#47bac1",
-				data: testo.reports.map(totalTests)
+				data: testo.reports.map(report => report.totalTestsCount)
 			},
 			{
 				label: "Успешных тестов",
@@ -42,7 +22,7 @@ const LineChart = () => {
 				backgroundColor: "transparent",
 				borderColor: "#5fc27e",
 				borderDash: [4, 4],
-				data: testo.reports.map(successfullTests)
+				data: testo.reports.map(report => report.successfulTestsCount)
 			}
 		]
 	};
@@ -92,7 +72,7 @@ const LineChart = () => {
 		<Card className="flex-fill w-100">
 			<CardHeader>
 				<CardTitle tag="h5" className="mb-0">
-					Запуски тестов за последнее время
+					Результаты тестирования предыдущих сборок
 				</CardTitle>
 			</CardHeader>
 			<CardBody>
