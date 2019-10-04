@@ -62,7 +62,7 @@ const NavbarComponent = ({ dispatch }) => {
 	}
 
 	const onChange = option => {
-		location.pathname = `\\project\\${testo.currentProject}\\branch\\${testo.currentBranch}\\build\\${option.value}`
+		location.pathname = `/project/${testo.currentProject}/branch/${testo.currentBranch}/build/${option.value}`
 	}
 
 	return (
