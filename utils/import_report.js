@@ -46,7 +46,7 @@ MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUni
 	try {
 		const db = client.db('testo');
 		const projects = db.collection('projects');
-		const project = await projects.findOne({name: project_name});
+		let project = await projects.findOne({name: project_name});
 		if (!project) {
 			project = {name: project_name, branches: []};
 		}
