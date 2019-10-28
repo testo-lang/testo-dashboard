@@ -58,16 +58,11 @@ MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUni
 
 		const reports = db.collection('reports');
 
-		if (await reports.findOne({build_number})) {
-			throw `Report with build number ${build_number} already exists`;
-		}
-
 		await reports.replaceOne(
 			{
-				start_timestamp: report.start_timestamp,
-				stop_timestamp: report.stop_timestamp,
 				project: report.project,
 				branch: report.branch,
+				build_number: report.build_number
 			},
 			report,
 			{upsert: true}
