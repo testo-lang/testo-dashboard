@@ -34,11 +34,10 @@ const reportPage = async function(req, res) {
 		.project({_id: 0, project: 0, branch: 0})
 		.sort({build_number: -1})
 		.limit(10)
-		.sort({build_number: 1})
 		.toArray();
 	const projects = await projectCursor;
 	const buildNumbers = await buildNumbersCursor;
-	const reports = await reportsCursor;
+	const reports = (await reportsCursor).reverse();
 	const testo = {
 		projects,
 		buildNumbers,
