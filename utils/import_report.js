@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var argv = require('yargs')
-	.option('report_path', {
+	.option('report_folder', {
 		demandOption: true,
 		type: 'string'
 	})
@@ -20,12 +20,25 @@ var argv = require('yargs')
   .help()
   .argv;
 
-let {report_path, project_name, branch_name, build_number} = argv;
+let {report_folder, project_name, branch_name, build_number} = argv;
 
 const fs = require("fs");
 
+if (!fs.existsSync(report_folder)) {
+	throw `${report_folder} does not exists`;
+}
+
+const stats = fs.statSync(report_folder);
+if (!stats.isDirectory()) {
+	throw `${report_folder} is not a directory`;
+}
+
+const path = require("path");
+
+const report_path = path.join(report_folder, "report.json");
+
 if (!fs.existsSync(report_path)) {
-	throw `File ${report_path} does not exists`;
+	throw `Directory ${report_folder} does not contain report.json file`;
 }
 
 const data = fs.readFileSync(report_path);
@@ -36,6 +49,17 @@ report.stop_timestamp = new Date(report.stop_timestamp);
 report.project = project_name;
 report.branch = branch_name;
 report.build_number = build_number;
+
+for (let test of report.tests) {
+	const logs_path = path.join(report_folder, test.name);
+	if (fs.existsSync(logs_path)) {
+		test.logs = fs.readFileSync(logs_path, 'utf-8');
+	}
+	const screenshot_path = path.join(report_folder, test.name + '_wait_failed.png');
+	if (fs.existsSync(screenshot_path)) {
+		test.screenshot = fs.readFileSync(screenshot_path);
+	}
+}
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');

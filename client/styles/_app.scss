@@ -51,6 +51,11 @@
 @import "4-utilities/position";
 
 // 3rd party plugins
+@import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min';
+.react-bootstrap-table table {
+	table-layout: auto;
+	margin-bottom: 0;
+}
 
 // 3rd party plugin styles
 @import "5-vendor/perfect-scrollbar";

@@ -4,13 +4,17 @@ import {
 	Badge,
 	Card,
 	CardHeader,
+	CardBody,
 	CardTitle,
 	DropdownItem,
 	DropdownMenu,
 	DropdownToggle,
 	UncontrolledDropdown,
-	Table
 } from "reactstrap";
+
+import { MinusCircle, PlusCircle } from "react-feather";
+
+import BootstrapTable from "react-bootstrap-table-next";
 
 import { MoreHorizontal } from "react-feather";
 import { StringifyDuration } from "../../utils";
@@ -37,47 +41,97 @@ function status_to_class(status) {
 	}
 }
 
-const Tests = () => (
-	<Card className="flex-fill w-100">
-		<CardHeader>
-			<CardTitle tag="h5" className="mb-0">
-				Список тестов для этой сборки
-			</CardTitle>
-		</CardHeader>
-		<Table striped className="my-0">
-			<thead>
-				<tr>
-					<th>Название</th>
-					<th className="d-none d-md-table-cell">Описание</th>
-					<th className="d-none d-xl-table-cell">Время прогона</th>
-					<th>Статус</th>
-				</tr>
-			</thead>
-			<tbody>
-				{
-					testo.lastReport.tests.map((test) => {
-						if (test.description === '') {
-							return null;
-						}
-						let duration = StringifyDuration(test.duration)
-						if (test.is_cached == true) {
-							duration += ' (кэширован)';
-						}
-						return (
-							<tr key={test.name}>
-								<td>{test.name}</td>
-								<td className="d-none d-md-table-cell">{test.description}</td>
-								<td className="d-none d-xl-table-cell">{duration}</td>
-								<td>
-									<Badge color={status_to_class(test.status)}>{status_to_text(test.status)}</Badge>
-								</td>
-							</tr>
-						);
-					})
+const tableColumns = [
+	{
+		dataField: "name",
+		text: "Название",
+		sort: true
+	},
+	{
+		dataField: "description",
+		text: "Описание",
+		sort: true
+	},
+	{
+		dataField: "duration",
+		text: "Время прогона",
+		sort: true,
+		formatter: function(_, test) {
+			let duration = StringifyDuration(test.duration);
+			if (test.is_cached == true) {
+				duration += ' (кэширован)';
+			}
+			return duration;
+		},
+		style: {
+			minWidth: '170px'
+		}
+	},
+	{
+		dataField: "status",
+		text: "Статус",
+		sort: true,
+		formatter: function(cell, test) {
+			return <Badge color={status_to_class(test.status)}>{status_to_text(test.status)}</Badge>;
+		}
+	}
+];
+
+const Tests = () => {
+	const tableData = testo.lastReport.tests.filter(test => {
+		return test.description != '';
+	});
+	const expandRow = {
+		renderer: test => {
+			if (test.logs) {
+				if (test.screenshot) {
+					var img = <div className="mb-1"><img src={"data:image/png;base64," + test.screenshot}></img></div>
 				}
-			</tbody>
-		</Table>
-	</Card>
-);
+				return (
+					<div>
+						<pre className="mb-2">{test.logs}</pre>
+						{img}
+					</div>
+				);
+			} else {
+				return (
+					<div>Логи отсутствуют</div>
+				)
+			}
+		},
+		showExpandColumn: true,
+		expandHeaderColumnRenderer: ({ isAnyExpands }) =>
+			isAnyExpands ? (
+				<MinusCircle width={16} height={16} />
+			) : (
+				<PlusCircle width={16} height={16} />
+			),
+		expandColumnRenderer: ({ expanded }) =>
+			expanded ? (
+				<MinusCircle width={16} height={16} />
+			) : (
+				<PlusCircle width={16} height={16} />
+			)
+	};
+	return (
+		<Card className="flex-fill w-100">
+			<CardHeader>
+				<CardTitle tag="h5" className="mb-0">
+					Список тестов для этой сборки
+				</CardTitle>
+			</CardHeader>
+			<CardBody>
+				<BootstrapTable
+					bootstrap4
+					bordered={false}
+					keyField="name"
+					data={tableData}
+					columns={tableColumns}
+					expandRow={expandRow}
+				></BootstrapTable>
+			</CardBody>
+		</Card>
+	);
+};
 
 export default Tests;
