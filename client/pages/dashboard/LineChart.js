@@ -4,6 +4,18 @@ import { Card, CardBody, CardHeader, CardTitle } from "reactstrap";
 import { StringifyTimestamp } from "../../utils";
 
 const LineChart = () => {
+	let suggestedMin = 100500
+	let suggestedMax = 0
+	for (let report of testo.reports) {
+		if (suggestedMax < report.totalTestsCount) {
+			suggestedMax = report.totalTestsCount
+		}
+		if (suggestedMin > report.successfulTestsCount) {
+			suggestedMin = report.successfulTestsCount
+		}
+	}
+	suggestedMin -= 10
+	suggestedMax += 10
 	const data = {
 		labels: testo.reports.map(report => StringifyTimestamp(report.stop_timestamp)),
 		datasets: [
@@ -12,6 +24,7 @@ const LineChart = () => {
 				fill: true,
 				backgroundColor: "transparent",
 				borderColor: "#47bac1",
+				borderDash: [8, 4],
 				data: testo.reports.map(report => report.totalTestsCount)
 			},
 			{
@@ -19,7 +32,6 @@ const LineChart = () => {
 				fill: true,
 				backgroundColor: "transparent",
 				borderColor: "#5fc27e",
-				borderDash: [4, 4],
 				data: testo.reports.map(report => report.successfulTestsCount)
 			}
 		]
@@ -44,23 +56,15 @@ const LineChart = () => {
 		scales: {
 			xAxes: [
 				{
-					reverse: true,
-					gridLines: {
-						color: "rgba(0,0,0,0.05)"
-					}
 				}
 			],
 			yAxes: [
 				{
 					ticks: {
-						stepSize: 500
+						suggestedMin,
+						suggestedMax,
+						stepSize: 10
 					},
-					display: true,
-					borderDash: [5, 5],
-					gridLines: {
-						color: "rgba(0,0,0,0)",
-						fontColor: "#fff"
-					}
 				}
 			]
 		}
