@@ -18,13 +18,11 @@ for (let report of testo.reports) {
 	let failedTestsCount = 0;
 
 	for (let test of report.tests) {
-		if (test.description != '') {
-			if (test.status == 'success') {
-				successfulTestsCount += 1;
-			}
-			if (test.status == 'fail') {
-				failedTestsCount += 1;
-			}
+		if (test.status == 'success') {
+			successfulTestsCount += 1;
+		}
+		if (test.status == 'fail') {
+			failedTestsCount += 1;
 		}
 	}
 

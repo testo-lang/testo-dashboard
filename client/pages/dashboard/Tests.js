@@ -78,9 +78,7 @@ const tableColumns = [
 ];
 
 const Tests = () => {
-	const tableData = testo.lastReport.tests.filter(test => {
-		return test.description != '';
-	});
+	const tableData = testo.lastReport.tests;
 	const expandRow = {
 		renderer: test => {
 			if (test.logs) {
