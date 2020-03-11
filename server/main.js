@@ -67,9 +67,10 @@ app.get('/project/:project/branch/:branch/build/:build', reportPage);
 
 app.use(express.static('public'));
 
-MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true }, function(err, client) {
+MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true }, async function(err, client) {
 	assert.equal(null, err);
 	db = client.db('testo');
+	await db.collection('reports').ensureIndex({build_number: -1})
 	app.listen(port, () => console.log(`Listening on port ${port}`));
 });
 
