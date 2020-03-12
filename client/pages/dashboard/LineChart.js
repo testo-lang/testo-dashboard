@@ -17,7 +17,7 @@ const LineChart = () => {
 	suggestedMin -= 10
 	suggestedMax += 10
 	const data = {
-		labels: testo.reports.map(report => StringifyTimestamp(report.stop_timestamp)),
+		labels: testo.reports.map(report => [StringifyTimestamp(report.stop_timestamp), ` сборка ${report.build_number}`]),
 		datasets: [
 			{
 				label: "Всего тестов",
